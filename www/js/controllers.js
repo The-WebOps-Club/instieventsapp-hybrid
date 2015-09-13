@@ -44,13 +44,13 @@ angular.module('starter.controllers',[])
             return 0;
           }
 
-      $scope.events.sort(compare);
+          $scope.events.sort(compare);
       // console.log($scope.events);
         }, 
         function(response){
             // console.log(response);
             if (response.status == 401){
-            location.replace('index.html');
+            location.replace('login.html');
             $scope.events = events;
             
             var currentTime = new Date();

@@ -16,7 +16,7 @@ angular.module('login', ['ionic'] )
       // private mode
       var alertPopup = $ionicPopup.alert({
              title: 'Error!',
-             template: "Turn of private mode to use this page"
+             template: "Turn off private mode to use this page."
             });
     } else {
       throw e;
@@ -73,7 +73,7 @@ angular.module('login', ['ionic'] )
             console.log(response.data);
             // window.localStorage.setItem('data', response.data);
             window.localStorage.setItem('token', response.data.token);
-            location.replace('home.html');
+            location.replace('index.html');
           },
            function(response) {
             console.log(Error);
