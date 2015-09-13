@@ -1,0 +1,45 @@
+<ion-view view-title="Scoreboard">  
+
+ 
+  <!--
+  <ol class="list">
+      <li class="item">
+        <p style="text-align:right"><b>Hostel</b></p>
+        <p style="text-align:left"><b>Points</b></p>
+      </li>
+      <li class="item">
+        <p style="text-align:right"></p>
+        <p style="text-align:left"></p>
+      </li>
+      <li class="item">
+        <p style="text-align:right"></p>
+        <p style="text-align:left"></p>
+      </li>
+  </ol>
+  -->
+ 
+    <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+   
+      <br><br><br><br>
+      <ul class="list-borderless">
+        <li class="item">
+          <div class="row">
+            <div class="col col-25"><b>Position</b></div>     
+            <div class="col col-50"><b>Hostel</b></div>
+            <div class="col col-25"><b>Score</b></div>
+          </div>
+        </li>
+      </ul>
+      
+     
+        <li class="item" ng-repeat="member in scorecard">
+          <div class="row">
+            <div class="col col-25"><h3 style="color: getUserColor(member.hostel.name)">{{ getPosition($index) }}</h3></div>
+            <div class="col col-50"><h3 style="color: getUserColor(member.hostel.name)">{{ member.hostel.name }}</h3></div>
+            <div class="col col-25"><h3 style="color: getUserColor(member.hostel.name)">{{ member.score }}</h3></div>
+        </li>
+      </ul>
+
+      <br><br>
+    </ion-scroll>
+</ion-view>

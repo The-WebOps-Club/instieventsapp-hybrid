@@ -1,0 +1,91 @@
+<ion-view view-title="{{ event.name }}">
+ 
+  <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+    <br> <br> <br><br>
+      <div class="list" >
+
+      <div ng-show="isEventDate(event.time)">
+        <a class="item item-icon-left">
+  
+            <i class="icon ion-ios-calendar-outline custom-icon"></i>
+            <h4 style="color:grey">Date</h4>
+            <h2>{{ getEventDate(event) }}</h2>
+        </a>
+      </div>
+       <div ng-show="!isEventDate(event.time)">
+        <a class="item item-icon-left">
+  
+            <i class="icon ion-ios-calendar-outline custom-icon"></i>
+            <h4 style="color:grey">Date</h4>
+            <h2>Date shall be announced later</h2>
+        </a>
+      </div>
+      <div ng-show="isEventTime(event.time)">
+        <a class="item item-icon-left">
+  
+            <i class="icon ion-ios-time-outline custom-icon"></i>
+            <h4 style="color:grey">Time</h4>
+            <h2>{{ getEventTime(event) }}</h2>
+        </a>
+      </div>
+       <div ng-show="!isEventTime(event.time)">
+        <a class="item item-icon-left">
+  
+            <i class="icon ion-ios-time-outline custom-icon"></i>
+            <h4 style="color:grey">Time</h4>
+            Time shall be announced later
+        </a>
+      </div>
+      <div ng-show="isEventVenue(event.venue)">
+        <a class="item item-icon-left">
+  
+            <i class="icon ion-ios-location-outline custom-icon"></i>
+            <h4 style="color:grey">Venue</h4>
+            <h2>{{ event.venue }}</h2>
+        </a>
+      </div>
+       <div ng-show="!isEventVenue(event.venue)">
+        <a class="item item-icon-left">
+  
+            <i class="icon ion-ios-location-outline custom-icon"></i>
+            <h4 style="color:grey">Venue</h4>
+            <h2>Venue shall be announced later</h2>
+        </a>
+      </div>
+      <a class="item item-icon-left">
+        
+          <i class="icon ion-ios-pricetags-outline custom-icon"></i>
+          <h4 style="color:grey">Description</h4>
+          <!--<h2>{{ event.description }}</h2>-->
+        <div class="item item-text-wrap ">
+          <h2>{{ event.description }}</h2>
+        </div>
+      </a>
+      
+      <a class="item item-icon-left">
+
+          <i class="icon ion-ios-star-outline custom-icon"></i>
+          <h4 style="color:grey">Results</h4>
+          <ul class="list-borderless">
+            <li class="item">
+              <div class="row">
+                <div class="col col-75"><b>Hostel</b></div>
+                <div class="col col-25"><b>Score</b></div>
+              </div>
+            </li>
+          </ul>
+      
+      
+          <li class="item" ng-repeat="result in event.result | orderBy:'-score'">
+            <div class="row">
+              <div class="col col-75">{{ result.hostel.name }}</div>
+              <div class="col col-25">{{ result.score }}</div>
+            </div>
+          </li>
+        </ul>
+      </a>
+    </div>
+    <br> <br>
+   </ion-scroll>
+</ion-view>
+

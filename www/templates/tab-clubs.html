@@ -1,0 +1,48 @@
+<ion-view view-title="Clubs">
+ <!-- <ion-content>
+    <ion-list>
+    <ion-toggle  ng-model="settings.enableFriends">
+        Enable Friends
+    </ion-toggle>
+    </ion-list>
+  </ion-content> -->
+  <ion-scroll zooming="true" direction="y" style="width: 100%; height: 100%">
+    <br> <br>  <br><br>
+    <div class="list card" ng-repeat="club in clubs"> 
+  
+      <div class="item item-avatar item-icon-left">
+        <i class="icon ion-ios-color-filter custom-icon-main"></i>
+        <h2 style="color:#ef473a">{{ club.name }}</h2>
+      </div>
+  
+      <div class="item item-body">
+        <img class="full-image" src="http://saarang.org/litsoc/images/club_logos/{{ club.logo }}" onerror="this.src = 'img/error.jpg';" alt="Image Missing">
+          <h3>
+            {{ club.description | limitTo: 150 }}...
+          </h3>
+      </div>
+  
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <div ng-click=openClubDetails(club)>
+          <a class="tab-item" href="#/tab/clubdetails"> 
+            <i class="icon ion-ios-paperplane-outline"></i>
+            Learn more
+          </a>
+        </div>  
+        <a class="tab-item" href="#">
+        </a>
+        <div ng-init="obj={ check:club.isSubscribed }"> 
+          <a class="tab-item" ng-if="!obj.check" ng-click="obj.check = true; subscribe(check,club)">
+            <i class="icon ion-ios-pricetags-outline"></i>
+            Subscribe
+          </a>
+          <a class="tab-item" ng-if="obj.check" ng-click="obj.check = false; subscribe(check,club)">
+            <i class="icon ion-ios-pricetags" ></i>
+            Subscribed
+          </a>
+        </div>
+      </div>  
+    </div>
+    <br> <br>
+  </ion-scroll>
+</ion-view>
