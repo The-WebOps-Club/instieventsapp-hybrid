@@ -45,10 +45,14 @@ angular.module('starter.controllers',[])
           }
 
           $scope.events.sort(compare);
+          $ionicLoading.hide();
+
       // console.log($scope.events);
         }, 
         function(response){
             // console.log(response);
+            $ionicLoading.hide();
+
             if (response.status == 401){
             location.replace('login.html');
             $scope.events = events;
@@ -116,7 +120,6 @@ angular.module('starter.controllers',[])
           // console.log(response);
         });
       
-    $ionicLoading.hide();
     
     $scope.isEventDate = function(event){
  
