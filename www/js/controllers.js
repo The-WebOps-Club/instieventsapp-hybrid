@@ -147,11 +147,13 @@ angular.module('starter.controllers',[])
     $scope.isEventTime = function(event){
       if(event.time === null)
         return false;
+        
       var date = new Date(event.time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
-      if(_time!== 'NaN:NaN')
+      console.log(_time);
+      if(_time!== 'NaN:NaN' || _time!== '16:46')
         return true;
-      else 
+      else
         return false;
       
     };
@@ -506,6 +508,8 @@ angular.module('starter.controllers',[])
      } else {
        return false;
      }
+     
+    // $scope.event = loadDetails.addEvent(event);
    };
 });
 
