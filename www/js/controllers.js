@@ -182,8 +182,15 @@ angular.module('starter.controllers',[])
     };
     
     $scope.getEventTime = function(event){
-      var date = new Date(event.time);
-      var _time = date.getHours() + ":" + date.getMinutes() ;
+     var date = new Date(event.time);
+      var _time;
+      var _time24hr = date.getHours();
+      var _time12hr = date.getHours()-12 + ":" + date.getMinutes();
+      if( _time24hr>12)
+        _time = _time12hr+" pm";
+      else 
+        _time = _time12hr+" am";
+      
       return _time;
     };
 
@@ -314,8 +321,15 @@ angular.module('starter.controllers',[])
     };
     
     $scope.getEventTime = function(event){
-      var date = new Date(event.time);
-      var _time = date.getHours() + ":" + date.getMinutes() ;
+     var date = new Date(event.time);
+      var _time;
+      var _time24hr = date.getHours();
+      var _time12hr = date.getHours()-12 + ":" + date.getMinutes();
+      if( _time24hr>12)
+        _time = _time12hr+" pm";
+      else 
+        _time = _time12hr+" am";
+      
       return _time;
     };
 
@@ -355,7 +369,14 @@ angular.module('starter.controllers',[])
     
     $scope.getEventTime = function(event){
       var date = new Date(event.time);
-      var _time = date.getHours() + ":" + date.getMinutes() ;
+      var _time;
+      var _time24hr = date.getHours();
+      var _time12hr = date.getHours()-12 + ":" + date.getMinutes();
+      if( _time24hr>12)
+        _time = _time12hr+" pm";
+      else 
+        _time = _time12hr+" am";
+      
       return _time;
     };
 
