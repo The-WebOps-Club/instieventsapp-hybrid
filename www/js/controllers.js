@@ -223,6 +223,14 @@ angular.module('starter.controllers',[])
     return events;
   };
   
+  var addClubEvents = function(newEvents){
+    events = newEvents;
+  };
+  
+  var getClubEvents = function(){
+    return events;
+  };
+  
   var club = [{name:'club not defined'}];
   var addClub = function(newClub) {
       club = newClub;
@@ -257,7 +265,9 @@ angular.module('starter.controllers',[])
     addClubDetails: addClubDetails,
     getClubDetails: getClubDetails,
     addScorecard: addScorecard,
-    getScorecard: getScorecard
+    getScorecard: getScorecard,
+    addClubEvents: addClubEvents,
+    getClubEvents: getClubEvents
   };
 
 })
@@ -293,7 +303,7 @@ angular.module('starter.controllers',[])
         return false;
       var date = new Date(time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
-      if(_time!== 'NaN:NaN')
+      if(_time!== 'NaN:NaN' || _time!=='16:46')
         return true;
       else  
         return true;
@@ -456,19 +466,17 @@ angular.module('starter.controllers',[])
   $scope.getPosition = function(num){
     if( $scope.scorecard[num-1]!== undefined){
       if( $scope.scorecard[num].score == $scope.scorecard[num-1].score){
-       $scope.scorecard[num].position = num;
-       return $scope.scorecard[num-1].position;
+       $scope.scorecard[num].position = $scope.scorecard[num-1].position;
+       return $scope.scorecard[num].position;
       }
       else{
         $scope.scorecard[num].position = num+1;
         return num+1;
       }
     }
-    else{
-      $scope.scorecard[num].position = num+1;
+    else
       return num+1;
-    }
-    };
+  };
   
   
   $scope.getUserColor = function(hostel){
