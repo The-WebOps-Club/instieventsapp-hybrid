@@ -119,7 +119,9 @@ angular.module('starter.controllers',[])
     $ionicLoading.hide();
     
     $scope.isEventDate = function(event){
- 
+      if( event.time === null)
+        return false;
+        
       var monthNames = [
         "January", "February", "March",
         "April", "May", "June", "July",
@@ -133,22 +135,33 @@ angular.module('starter.controllers',[])
       var year = date.getFullYear();
       var _date = day + ' ' + monthNames[monthIndex] + ' ' + year;
 
-      if(_date!== 'NaN undefined NaN'){ 
+      if(_date!== 'NaN undefined NaN')
         return true;
-      }
+      else 
+        return false;
     };
     
     $scope.isEventTime = function(event){
+      if(event.time === null)
+        return false;
       var date = new Date(event.time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
       if(_time!== 'NaN:NaN')
         return true;
+      else 
+        return false;
       
     };
     
+    
     $scope.isEventVenue = function(event){
+      if( event.venue === '')
+        return false;
+      
       if(typeof event.venue !== 'undefined')
         return true;
+      else  
+        return false;
     };
     
     $scope.getEventDate = function(event){
@@ -242,7 +255,8 @@ angular.module('starter.controllers',[])
   
    $scope.isEventDate = function(time){
       // console.log("iseventdate is being called");
-      
+      if( time === null)
+        return false;
       var monthNames = [
         "January", "February", "March",
         "April", "May", "June", "July",
@@ -256,22 +270,31 @@ angular.module('starter.controllers',[])
       var year = date.getFullYear();
       var _date = day + ' ' + monthNames[monthIndex] + ' ' + year;
 
-      if(_date!== 'NaN undefined NaN'){ 
+      if(_date!== 'NaN undefined NaN')
         return true;
-      }
+      else
+        return false;
     };
     
     $scope.isEventTime = function(time){
+      if( time === null)
+        return false;
       var date = new Date(time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
       if(_time!== 'NaN:NaN')
+        return true;
+      else  
         return true;
       
     };
     
      $scope.isEventVenue = function(venue){
+       if( venue === '')
+        return false;
       if(typeof venue !== 'undefined')
         return true;
+      else  
+        return false;
     };
   $scope.getEventDate = function(event){
      
@@ -407,7 +430,7 @@ angular.module('starter.controllers',[])
   $scope.getPosition = function(num){
     if( $scope.scorecard[num-1]!== undefined){
       if( $scope.scorecard[num].score == $scope.scorecard[num-1].score){
-       $scope.scorecard[num].position = num+1;
+       $scope.scorecard[num].position = num;
        return $scope.scorecard[num-1].position;
       }
       else{
@@ -415,9 +438,12 @@ angular.module('starter.controllers',[])
         return num+1;
       }
     }
-    else
+    else{
+      $scope.scorecard[num].position = num+1;
       return num+1;
-  };
+    }
+    };
+  
   
   $scope.getUserColor = function(hostel){
     if(user.hostel === hostel)
