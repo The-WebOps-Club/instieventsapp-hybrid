@@ -3,6 +3,9 @@ var server = "http://litsoc.saarang.org/";
 angular.module('starter.controllers',[])
 
 .controller('EventsCtrl', function($scope, loadDetails, $http, $ionicLoading) {
+
+    $scope.status1 = 0;
+    $scope.status2 = 0;
   
     $ionicLoading.show({
       content: 'Loading',
@@ -45,7 +48,11 @@ angular.module('starter.controllers',[])
           }
 
           $scope.events.sort(compare);
-          $ionicLoading.hide();
+          $scope.status1 = 1;
+          if ($scope.status2 == 1){
+            $ionicLoading.hide();
+          }
+
 
       // console.log($scope.events);
         }, 
@@ -94,6 +101,10 @@ angular.module('starter.controllers',[])
           // $localStorage.clubs = response.data;
           $scope.clubs = response.data;
           loadDetails.addClub($scope.clubs);
+          $scope.status2 = 1;
+          if ($scope.status1 == 1){
+            $ionicLoading.hide();
+          }
         },
        function(response){
          $scope.clubs = clubs;
