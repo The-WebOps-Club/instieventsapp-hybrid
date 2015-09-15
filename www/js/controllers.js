@@ -150,7 +150,7 @@ angular.module('starter.controllers',[])
         
       var date = new Date(event.time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
-      console.log(_time);
+      // console.log(_time);
       if(_time!== 'NaN:NaN' && _time!== '16:46')
         return true;
       else
@@ -452,26 +452,36 @@ angular.module('starter.controllers',[])
   }
 
   $scope.scorecard.sort(compare);
+  $scope.scorecard[0].position = 1;
+  for ( i =1; i < $scope.scorecard.length; i++){
+    if ($scope.scorecard[i].score < $scope.scorecard[i-1].score){
+        $scope.scorecard[i].position = i + 1;
+      } else {
+        $scope.scorecard[i].position = $scope.scorecard[i -1].position;
+    }
+  }
   
   $scope.getPosition = function(num){
-    if( $scope.scorecard[num-1]!== undefined){
-      if( $scope.scorecard[num].score == $scope.scorecard[num-1].score){
-       $scope.scorecard[num].position = num;
-       return $scope.scorecard[num-1].position;
-      }
-      else{
-        $scope.scorecard[num].position = num+1;
-        return num+1;
-      }
-    }
-    else{
-      $scope.scorecard[num].position = num+1;
-      return num+1;
-    }
-    };
+    // if( $scope.scorecard[num-1]!== undefined){
+    //   if( $scope.scorecard[num].score == $scope.scorecard[num-1].score){
+    //    $scope.scorecard[num].position = num;
+    //    return $scope.scorecard[num-1].position;
+    //   }
+    //   else{
+    //     $scope.scorecard[num].position = num+1;
+    //     return num+1;
+    //   }
+    // }
+    // else{
+    //   $scope.scorecard[num].position = num+1;
+    //   return num+1;
+    // }
+    return $scope.scorecard[num].position;
+  };
   
   
   $scope.getUserColor = function(hostel){
+    console.log(hostel);
     if(user.hostel === hostel)
       return '#22D706';
   };
