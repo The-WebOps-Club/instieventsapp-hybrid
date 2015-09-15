@@ -151,7 +151,7 @@ angular.module('starter.controllers',[])
       var date = new Date(event.time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
       console.log(_time);
-      if(_time!== 'NaN:NaN' || _time!== '16:46')
+      if(_time!== 'NaN:NaN' && _time!== '16:46')
         return true;
       else
         return false;
