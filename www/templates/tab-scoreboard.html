@@ -34,7 +34,7 @@
      
         <li class="item" ng-repeat="member in scorecard">
           <div class="row">
-            <div class="col col-25"><h3 style="color: getUserColor(member.hostel.name)">{{ getPosition($index) }}</h3></div>
+            <div class="col col-25"><h3 style="color: getUserColor(member.hostel.name)">{{ member.position }}</h3></div>
             <div class="col col-50"><h3 style="color: getUserColor(member.hostel.name)">{{ member.hostel.name }}</h3></div>
             <div class="col col-25"><h3 style="color: getUserColor(member.hostel.name)">{{ member.score }}</h3></div>
         </li>

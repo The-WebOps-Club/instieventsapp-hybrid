@@ -2,7 +2,8 @@
 <html>
   <head>
     <script type="text/javascript">
-      if (window.localStorage['token'] == undefined ){
+      var version = "1.0.0";
+      if (window.localStorage['token' + version] == undefined ){
             location.replace('login.html');
       }
     </script>
@@ -13,7 +14,6 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/ionicons/css/ionicons.css" rel="stylesheet">
     <link rel="stylesheet" href="css/ionic.iosButtons.css">
   
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above

@@ -1,4 +1,5 @@
 // var server = "http://10.21.209.31:9000/";
+var version = "1.0.0";
 var server = "http://litsoc.saarang.org/";
 var ldapLogin = "http://10.24.0.224/mobapi/ldap/login.php";
 angular.module('login', ['ionic'] )
@@ -72,7 +73,7 @@ angular.module('login', ['ionic'] )
             // when the response is availa 
             console.log(response.data);
             // window.localStorage.setItem('data', response.data);
-            window.localStorage.setItem('token', response.data.token);
+            window.localStorage.setItem('token' + version, response.data.token);
             location.replace('index.html');
           },
            function(response) {

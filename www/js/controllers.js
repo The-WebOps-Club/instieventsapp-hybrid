@@ -1,12 +1,12 @@
+var version = "1.0.0";
 var server = "http://litsoc.saarang.org/";
 // var server = "http://10.21.209.31:9000/";
+var token = window.localStorage['token' + version];
+
 angular.module('starter.controllers',[])
 
 .controller('EventsCtrl', function($scope, loadDetails, $http, $ionicLoading) {
 
-    $scope.status1 = 0;
-    $scope.status2 = 0;
-  
     $ionicLoading.show({
       content: 'Loading',
       animation: 'fade-in',
@@ -14,13 +14,13 @@ angular.module('starter.controllers',[])
       maxWidth: 200,
       showDelay: 0
     });
-  
+
    // Request to get all events
     var eventsReq = {
        method: 'GET',
        url: server + 'api/events',
        headers: {
-         'Authorization': 'Bearer ' + window.localStorage['token'],
+         'Authorization': 'Bearer ' + token,
        }
     };
     $http(eventsReq).then(function(response){
@@ -48,10 +48,7 @@ angular.module('starter.controllers',[])
           }
 
           $scope.events.sort(compare);
-          $scope.status1 = 1;
-          if ($scope.status2 == 1){
-            $ionicLoading.hide();
-          }
+          $ionicLoading.hide();
 
 
       // console.log($scope.events);
@@ -86,52 +83,7 @@ angular.module('starter.controllers',[])
       // console.log($scope.events);
           } else alert(response.data.errors.message);
         });
-  
-    // Request to load all clubs
-    var clubReq = {
-       method: 'GET',
-       url: server + 'api/clubs',
-       headers: {
-         'Authorization': 'Bearer ' + window.localStorage['token'],
-       }
-    };
-    $http(clubReq).then(function(response){
-          // console.log(response);
-          window.localStorage.setItem('clubs', response.data);
-          // $localStorage.clubs = response.data;
-          $scope.clubs = response.data;
-          loadDetails.addClub($scope.clubs);
-          $scope.status2 = 1;
-          if ($scope.status1 == 1){
-            $ionicLoading.hide();
-          }
-        },
-       function(response){
-         $scope.clubs = clubs;
-        // console.log(response);
-        });
-    
-    //Request to load scoreboard    
-    var scoreboardReq = {
-       method: 'GET',
-       url: server + 'api/scoreboards',
-       headers: {
-         'Authorization': 'Bearer ' + window.localStorage['token'],
-       }
-    };
-    $http(scoreboardReq).then(function(response){
-          // console.log(response);
-          // console.log(response.data[0].scorecard);
-          window.localStorage.setItem('scorecard', response.data[0].scorecard);
-          $scope.scorecard = response.data[0].scorecard;
-          loadDetails.addScorecard($scope.scorecard);
-        },
-       function(response){
-          $scope.scorecard = scorecard;
-          // console.log(response);
-        });
       
-    
     $scope.isEventDate = function(event){
       if( event.time === null)
         return false;
@@ -234,7 +186,7 @@ angular.module('starter.controllers',[])
     return events;
   };
   
-  var club = [{name:'club not defined'}];
+  var club = [];
   var addClub = function(newClub) {
       club = newClub;
   };
@@ -275,7 +227,6 @@ angular.module('starter.controllers',[])
 
 .controller('EventDetailsCtrl', function($scope,loadDetails){
   $scope.event = loadDetails.getEvent();
-  
    $scope.isEventDate = function(time){
       // console.log("iseventdate is being called");
       if( time === null)
@@ -300,7 +251,7 @@ angular.module('starter.controllers',[])
     };
     
     $scope.isEventTime = function(time){
-      if( time === null)
+      if (( time === null) || (time == undefined) )
         return false;
       var date = new Date(time);
       var _time = date.getHours() + ":" + date.getMinutes() ;
@@ -337,6 +288,7 @@ angular.module('starter.controllers',[])
     };
     
     $scope.getEventTime = function(event){
+
      var date = new Date(event.time);
       var _time;
       var _time24hr = date.getHours();
@@ -345,7 +297,7 @@ angular.module('starter.controllers',[])
         _time = _time12hr+" pm";
       else 
         _time = _time12hr+" am";
-      
+      if (_time == '4:46 pm') _time = "Time shall be announced later";
       return _time;
     };
 
@@ -451,8 +403,50 @@ angular.module('starter.controllers',[])
     
 })
 
-.controller('ScoreboardCtrl', function($scope, loadDetails) {
-  $scope.scorecard = loadDetails.getScorecard();
+.controller('ScoreboardCtrl', function($scope, loadDetails,  $http, $ionicLoading) {
+
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+
+    //Request to load scoreboard    
+    var scoreboardReq = {
+       method: 'GET',
+       url: server + 'api/scoreboards',
+       headers: {
+         'Authorization': 'Bearer ' + token,
+       }
+    };
+    $http(scoreboardReq).then(function(response){
+          console.log(response);
+          // console.log(response.data[0].scorecard);
+          window.localStorage.setItem('scorecard', response.data[0].scorecard);
+          $scope.scorecard = response.data[0].scorecard;
+          $scope.scorecard.sort(compare);
+          $scope.scorecard[0].position = 1;
+          for ( i =1; i < $scope.scorecard.length; i++){
+            if ($scope.scorecard[i].score < $scope.scorecard[i-1].score){
+                $scope.scorecard[i].position = i + 1;
+              } else {
+                $scope.scorecard[i].position = $scope.scorecard[i -1].position;
+            }
+          }
+          loadDetails.addScorecard($scope.scorecard);
+          $ionicLoading.hide();
+          console.log("No position");
+        },
+       function(response){
+          $scope.scorecard = scorecard;
+          if (response.status == 401)
+            location.replace('login.html');
+
+          // console.log(response);
+        });
+
   
   function compare(a,b) {
     if (a.score > b.score)
@@ -462,15 +456,6 @@ angular.module('starter.controllers',[])
     return 0;
   }
 
-  $scope.scorecard.sort(compare);
-  $scope.scorecard[0].position = 1;
-  for ( i =1; i < $scope.scorecard.length; i++){
-    if ($scope.scorecard[i].score < $scope.scorecard[i-1].score){
-        $scope.scorecard[i].position = i + 1;
-      } else {
-        $scope.scorecard[i].position = $scope.scorecard[i -1].position;
-    }
-  }
   
   $scope.getPosition = function(num){
     // if( $scope.scorecard[num-1]!== undefined){
@@ -501,9 +486,38 @@ angular.module('starter.controllers',[])
 })
 
 
-.controller('ClubsCtrl', function($scope, loadDetails) {
-    $scope.clubs = loadDetails.getClub();
-    
+.controller('ClubsCtrl', function($scope, loadDetails,  $http, $ionicLoading) {
+
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+
+    // Request to load all clubs
+    var clubReq = {
+       method: 'GET',
+       url: server + 'api/clubs',
+       headers: {
+         'Authorization': 'Bearer ' + token,
+       }
+    };
+    $http(clubReq).then(function(response){
+          // console.log(response);
+          window.localStorage.setItem('clubs', response.data);
+          // $localStorage.clubs = response.data;
+          $scope.clubs = response.data;
+          $ionicLoading.hide();
+        },
+       function(response){
+         $scope.clubs = clubs;
+         if (response.status == 401)
+            location.replace('login.html');
+        // console.log(response);
+        });
+
     $scope.openClubDetails = function(club){
   
       loadDetails.addClubDetails(club);
