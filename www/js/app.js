@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'firebase'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -41,78 +41,136 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.events', {
-    url: '/events',
-    views: {
-      'tab-events': {
-        templateUrl: 'templates/tab-events.html',
-        controller: 'EventsCtrl'
-      }
-    }
-  })
+  // .state('tab.events', {
+  //   url: '/events',
+  //   views: {
+  //     'tab-events': {
+  //       templateUrl: 'templates/tab-events.html',
+  //       controller: 'EventsCtrl'
+  //     }
+  //   }
+  // })
 
-  .state('tab.calendar', {
-      url: '/calendar',
-      views: {
-        'tab-calendar': {
-          templateUrl: 'templates/tab-calendar.html',
-          controller: 'CalendarCtrl'
-        }
-      }
-    })
+  // .state('tab.calendar', {
+  //     url: '/calendar',
+  //     views: {
+  //       'tab-calendar': {
+  //         templateUrl: 'templates/tab-calendar.html',
+  //         controller: 'CalendarCtrl'
+  //       }
+  //     }
+  //   })
     
-   .state('tab.scoreboard', {
-      url: '/scoreboard',
-      views: {
-        'tab-scoreboard': {
-          templateUrl: 'templates/tab-scoreboard.html',
-          controller: 'ScoreboardCtrl'
-        }
-      }
-    })  
+  // .state('tab.scoreboard', {
+  //     url: '/scoreboard',
+  //     views: {
+  //       'tab-scoreboard': {
+  //         templateUrl: 'templates/tab-scoreboard.html',
+  //         controller: 'ScoreboardCtrl'
+  //       }
+  //     }
+  //   })  
 
-  .state('tab.clubs', {
-    url: '/clubs',
-    views: {
-      'tab-clubs': {
-        templateUrl: 'templates/tab-clubs.html',
-        controller: 'ClubsCtrl'
-      }
-    }
-  })
+  // .state('tab.clubs', {
+  //   url: '/clubs',
+  //   views: {
+  //     'tab-clubs': {
+  //       templateUrl: 'templates/tab-clubs.html',
+  //       controller: 'ClubsCtrl'
+  //     }
+  //   }
+  // })
   
-   .state('tab.eventdetails', {
-      url: "/eventdetails",
+  .state('tab.home', {
+    url: '/home',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html',
+        controller: 'HomeCtrl'
+      }
+    }
+  })
+
+  .state('tab.favourites', {
+      url: '/favourites',
       views: {
-        'tab-events': {
-          templateUrl: "templates/tab-eventdetails.html",
-          controller: "EventDetailsCtrl"
+        'tab-favourites': {
+          templateUrl: 'templates/tab-favourites.html',
         }
       }
     })
-    
-     .state('tab.eventdetailsCalendar', {
-      url: "/eventdetailsCalendar",
+  
+  .state('tab.cart', {
+      url: '/cart',
       views: {
-        'tab-calendar': {
-          templateUrl: "templates/tab-eventdetails.html",
-          controller: "EventDetailsCtrl"
+        'tab-cart': {
+          templateUrl: 'templates/tab-cart.html',
         }
       }
     })
-    
-     .state('tab.clubdetails', {
-      url: "/clubdetails",
-      views: {
-        'tab-clubs': {
-          templateUrl: "templates/tab-clubdetails.html",
-          controller: "ClubDetailsCtrl"
-        }
+
+  .state('tab.account', {
+    url: '/account',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
       }
-    });
+    }
+  })
+
+    .state('tab.resto', {
+    url: '/resto',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/tab-resto.html',
+        controller:'RestoDetailsCtrl'
+      }
+    }
+  })  
+
+    .state('tab.menu', {
+    url: '/menu',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/tab-menu.html',
+        controller: 'MenuCtrl'
+      }
+    }
+  });
+  
+  // .state('tab.eventdetails', {
+  //     url: "/eventdetails",
+  //     views: {
+  //       'tab-events': {
+  //         templateUrl: "templates/tab-eventdetails.html",
+  //         controller: "EventDetailsCtrl"
+  //       }
+  //     }
+  //   })
+    
+  //   .state('tab.eventdetailsCalendar', {
+  //     url: "/eventdetailsCalendar",
+  //     views: {
+  //       'tab-calendar': {
+  //         templateUrl: "templates/tab-eventdetails.html",
+  //         controller: "EventDetailsCtrl"
+  //       }
+  //     }
+  //   })
+    
+  //   .state('tab.clubdetails', {
+  //     url: "/clubdetails",
+  //     views: {
+  //       'tab-clubs': {
+  //         templateUrl: "templates/tab-clubdetails.html",
+  //         controller: "ClubDetailsCtrl"
+  //       }
+  //     }
+  //   });
 
     
-    // .state('tab.scoreboard.litsoc', {
+  //   // .state('tab.scoreboard.litsoc', {
     //     url: "/litsoc",
     //     views: {
     //         'tab-scoreboard-litsoc': {
@@ -132,7 +190,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/events');
+  $urlRouterProvider.otherwise('/tab/home');
 
 });
 
